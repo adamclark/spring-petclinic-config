@@ -26,6 +26,7 @@ spec:
           - spring-petclinic
         from:
           kind: "ImageStreamTag"
+          namespace: "cicd"
           name: "spring-petclinic:latest"
   strategy: 
     type: "Rolling"
