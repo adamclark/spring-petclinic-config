@@ -16,7 +16,7 @@ spec:
           image: cicd/spring-petclinic
           ports:
             - containerPort: 8080
-            - protocol: "TCP"
+              protocol: "TCP"
   triggers:
     - type: "ConfigChange" 
     - type: "ImageChange" 
