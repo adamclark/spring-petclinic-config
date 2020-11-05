@@ -13,6 +13,19 @@ spec:
     spec:
       containers:
         - name: spring-petclinic
-          image: cicd/spring-petclinic:latest
+          image: cicd/spring-petclinic
           ports:
             - containerPort: 8080
+            - protocol: "TCP"
+  triggers:
+    - type: "ConfigChange" 
+    - type: "ImageChange" 
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - spring-petclinic
+        from:
+          kind: "ImageStreamTag"
+          name: "spring-petclinic:latest"
+  strategy: 
+    type: "Rolling"
