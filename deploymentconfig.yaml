@@ -13,6 +13,7 @@ spec:
     spec:
       containers:
         - name: spring-petclinic
+          imagePullPolicy: Always
           image: cicd/spring-petclinic
           ports:
             - containerPort: 8080
