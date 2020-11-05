@@ -19,14 +19,14 @@ spec:
           ports:
             - containerPort: 8080
               protocol: "TCP"
-  triggers:
-    - type: "ConfigChange" 
-    - type: "ImageChange" 
-      imageChangeParams:
-        automatic: true
-        containerNames:
-          - spring-petclinic
-        from:
-          kind: "ImageStreamTag"
-          namespace: "cicd"
-          name: "spring-petclinic:latest"
+  # triggers:
+  #   - type: "ConfigChange" 
+  #   - type: "ImageChange" 
+  #     imageChangeParams:
+  #       automatic: true
+  #       containerNames:
+  #         - spring-petclinic
+  #       from:
+  #         kind: "ImageStreamTag"
+  #         namespace: "cicd"
+  #         name: "spring-petclinic:latest"
