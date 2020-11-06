@@ -1,0 +1,27 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  labels:
+    {{ include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}
+spec:
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.git.source.repository }}
+      ref: {{ .Values.git.source.revision }}
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: {{ .Values.imagestream.namespace }}
+        name: {{ .Values.imagestream.name }}
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "{{ include "app.fullname" . }}:latest"
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange

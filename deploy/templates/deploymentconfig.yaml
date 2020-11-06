@@ -1,20 +1,22 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: spring-petclinic
+  labels:
+    {{ include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}
 spec:
   selector:
-    app: spring-petclinic
+    app: {{ include "app.fullname" . }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: spring-petclinic
+        {{ include "app.labels" . | nindent 8 }}
     spec:
       containers:
-        - name: spring-petclinic
+        - name: {{ include "app.fullname" . }}
           imagePullPolicy: Always
-          image: cicd/spring-petclinic
+          image: {{ .Values.imagestream.namespace }}/{{ .Values.imagestream.name }}
           ports:
             - containerPort: 8080
               protocol: "TCP"
@@ -24,10 +26,10 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - spring-petclinic
+          - {{ include "app.fullname" . }}
         from:
           kind: "ImageStreamTag"
-          namespace: "cicd"
-          name: "spring-petclinic:latest"
+          namespace: {{ .Values.imagestream.namespace }}
+          name: "{{ .Values.imagestream.name }}:{{ .Values.imagestream.version }}"
   strategy: 
     type: "Rolling"

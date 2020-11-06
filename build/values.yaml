@@ -1,0 +1,11 @@
+nameOverride: "spring-petclinic"
+fullnameOverride: "spring-petclinic"
+
+imagestream:
+  name: redhat-openjdk18-openshift:1.5
+  namespace: openshift
+
+git:
+  source:
+    repository: https://github.com/adamclark/spring-petclinic.git
+    revision: master
