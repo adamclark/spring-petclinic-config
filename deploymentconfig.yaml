@@ -1,11 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   name: spring-petclinic
 spec:
   selector:
-    matchLabels:
-      app: spring-petclinic
+    app: spring-petclinic
   replicas: 1
   template:
     metadata:
@@ -15,18 +14,20 @@ spec:
       containers:
         - name: spring-petclinic
           imagePullPolicy: Always
-          image: image-registry.openshift-image-registry.svc:5000/cicd/spring-petclinic
+          image: cicd/spring-petclinic
           ports:
             - containerPort: 8080
               protocol: "TCP"
-  # triggers:
-  #   - type: "ConfigChange" 
-  #   - type: "ImageChange" 
-  #     imageChangeParams:
-  #       automatic: true
-  #       containerNames:
-  #         - spring-petclinic
-  #       from:
-  #         kind: "ImageStreamTag"
-  #         namespace: "cicd"
-  #         name: "spring-petclinic:latest"
+  triggers:
+    - type: "ConfigChange" 
+    - type: "ImageChange" 
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - spring-petclinic
+        from:
+          kind: "ImageStreamTag"
+          namespace: "cicd"
+          name: "spring-petclinic:latest"
+  strategy: 
+    type: "Rolling"
