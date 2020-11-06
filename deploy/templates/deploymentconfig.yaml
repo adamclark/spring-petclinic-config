@@ -6,7 +6,7 @@ metadata:
   name: {{ include "app.fullname" . }}
 spec:
   selector:
-    app: {{ include "app.fullname" . }}
+    {{ include "app.selectorLabels" . | nindent 4 }}
   replicas: 1
   template:
     metadata:
